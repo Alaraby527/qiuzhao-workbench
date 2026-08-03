@@ -540,6 +540,94 @@
   .hidden { display:none !important; }
 
   /* ============================================================
+     APPLICATION STRATEGY — 投递策略
+     ============================================================ */
+  .strategy-banner {
+    background: linear-gradient(135deg, var(--accent-muted), var(--surface-card));
+    border: 1px solid color-mix(in srgb, var(--accent) 15%, var(--border));
+    border-radius: var(--radius-card); padding: 16px 20px; margin-bottom: 16px;
+    display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  }
+  .strategy-banner .sb-icon {
+    width: 44px; height: 44px; border-radius: 12px; display: grid; place-items: center;
+    background: var(--accent); color: var(--on-accent); flex: 0 0 auto;
+  }
+  .strategy-banner .sb-text { flex: 1; min-width: 200px; }
+  .strategy-banner .sb-title { font-size: 15px; font-weight: 800; color: var(--text); }
+  .strategy-banner .sb-desc { font-size: 12.5px; color: var(--text-secondary); margin-top: 3px; line-height: 1.5; }
+
+  .strategy-section { margin-bottom: 20px; }
+  .strategy-section .ss-head {
+    display: flex; align-items: center; gap: 8px; margin-bottom: 10px;
+    font-size: 15px; font-weight: 800;
+  }
+  .strategy-section .ss-head .ss-badge {
+    font-size: 12px; font-weight: 700; padding: 2px 10px; border-radius: 999px;
+  }
+  .strategy-section .ss-head .ss-count {
+    margin-left: auto; font-size: 12px; font-weight: 500; color: var(--text-secondary);
+  }
+  .ss-urgent .ss-head { color: var(--danger); }
+  .ss-urgent .ss-badge { background: var(--danger-muted); color: var(--danger); }
+  .ss-ready .ss-head { color: var(--module-1); }
+  .ss-ready .ss-badge { background: color-mix(in srgb, var(--module-1) 12%, transparent); color: var(--module-1); }
+  .ss-waiting .ss-head { color: var(--module-3); }
+  .ss-waiting .ss-badge { background: color-mix(in srgb, var(--module-3) 12%, transparent); color: var(--module-3); }
+  .ss-normal .ss-head { color: var(--module-2); }
+  .ss-normal .ss-badge { background: color-mix(in srgb, var(--module-2) 12%, transparent); color: var(--module-2); }
+
+  .strategy-card {
+    display: flex; align-items: center; gap: 12px; padding: 12px 14px;
+    background: var(--surface-card); border: 1px solid var(--border); border-radius: var(--radius-tile);
+    box-shadow: var(--shadow-card); margin-bottom: 8px; transition: transform .12s, box-shadow .15s;
+    cursor: pointer; flex-wrap: wrap;
+  }
+  .strategy-card:hover { transform: translateY(-1px); box-shadow: var(--shadow-overlay); border-color: var(--border-input); }
+  .strategy-card .sc-tier {
+    width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center;
+    flex: 0 0 auto; font-size: 11px; font-weight: 800; color: var(--on-accent);
+  }
+  .strategy-card .sc-info { flex: 1; min-width: 150px; }
+  .strategy-card .sc-title { font-size: 14px; font-weight: 700; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .strategy-card .sc-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+  .strategy-card .sc-action { flex: 0 0 auto; display: flex; gap: 8px; align-items: center; }
+  .strategy-card .sc-countdown {
+    font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 8px;
+  }
+  .strategy-card .sc-apply-btn {
+    padding: 7px 14px; border-radius: 8px; font-size: 12.5px; font-weight: 700;
+    border: none; cursor: pointer; transition: filter .15s;
+  }
+  .sc-apply-btn.green { background: var(--module-1); color: var(--on-accent); }
+  .sc-apply-btn.amber { background: var(--module-3); color: var(--on-accent); }
+  .sc-apply-btn.red { background: var(--danger); color: var(--on-accent); }
+  .sc-apply-btn.blue { background: var(--module-2); color: var(--on-accent); }
+  .sc-apply-btn:hover { filter: brightness(1.12); }
+
+  .reminder-popup {
+    position: fixed; top: 16px; right: 16px; z-index: 300;
+    background: var(--surface-card); border: 1px solid var(--border-input); border-radius: 16px;
+    padding: 18px 22px; box-shadow: var(--shadow-overlay); max-width: 380px;
+    animation: slideIn .3s ease;
+  }
+  @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+  .reminder-popup .rp-head { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .reminder-popup .rp-icon { width: 36px; height: 36px; border-radius: 10px; display: grid; place-items: center; background: var(--danger); color: var(--on-accent); flex: 0 0 auto; }
+  .reminder-popup .rp-title { font-size: 15px; font-weight: 800; }
+  .reminder-popup .rp-body { font-size: 13px; color: var(--text-secondary); line-height: 1.6; max-height: 200px; overflow-y: auto; }
+  .reminder-popup .rp-body .rp-item { padding: 6px 0; border-bottom: 1px solid var(--border); }
+  .reminder-popup .rp-body .rp-item:last-child { border-bottom: none; }
+  .reminder-popup .rp-close { position: absolute; top: 12px; right: 12px; width: 28px; height: 28px; border-radius: 8px; border: none; background: var(--surface-nested); cursor: pointer; display: grid; place-items: center; color: var(--text-secondary); }
+  .reminder-popup .rp-close:hover { background: var(--border); }
+
+  @media (max-width: 600px) {
+    .reminder-popup { left: 8px; right: 8px; max-width: none; top: 8px; }
+    .strategy-card { padding: 10px 12px; }
+    .strategy-card .sc-title { font-size: 13px; }
+    .strategy-banner { padding: 12px 14px; }
+  }
+
+  /* ============================================================
      MOBILE RESPONSIVE
      ============================================================ */
   .mobile-menu-btn { display: none; }
@@ -1930,14 +2018,293 @@ function confirmDelete(key,id){ const item=(data[key]||[]).find(i=>i.id==id); if
   overlay.querySelector("#c-ok").onclick=()=>{ data[key]=data[key].filter(i=>i.id!=id); persist(); close(); };
 }
 
+/* ============================================================
+   APPLICATION STRATEGY — 智能投递策略 + 提醒
+   ============================================================ */
+
+/* 公司分级：核心大厂 / 大厂 / 中小厂 */
+const TIER1_COMPANIES = ['字节跳动','腾讯','阿里巴巴','百度','美团','京东','拼多多','小米','华为','网易','微软','谷歌','苹果'];
+const TIER2_COMPANIES = ['携程','滴滴','快手','哔哩哔哩','bilibili','搜狐','新浪','360','OPPO','vivo','蔚来','理想','小鹏','商汤','寒武纪','科大讯飞','智谱','联想','蚂蚁','饿了么','得物','小红书','知乎','爱奇艺','哔哩','米哈游','莉莉丝','完美世界','吉比特','三七互娱','同花顺','万得','同程','去哪儿','叮咚','哈啰','追觅','安克','海康威视','TP-link','TP联洲','传音','深信服','帆软','金山','WPS'];
+
+function getCompanyTier(companyName) {
+  if (!companyName) return 'sme';
+  const name = companyName.toLowerCase();
+  for (const t1 of TIER1_COMPANIES) {
+    if (name.includes(t1.toLowerCase())) return 'tier1';
+  }
+  for (const t2 of TIER2_COMPANIES) {
+    if (name.includes(t2.toLowerCase())) return 'tier2';
+  }
+  return 'sme';
+}
+
+function getTierLabel(tier) {
+  return { tier1: '核心大厂', tier2: '大厂', sme: '中小厂' }[tier] || '中小厂';
+}
+
+function getTierColor(tier) {
+  return { tier1: 'var(--danger)', tier2: 'var(--module-3)', sme: 'var(--module-1)' }[tier] || 'var(--module-1)';
+}
+
+/* 解析截止日期，返回天数差（正数=还有N天截止，负数=已过期N天） */
+function daysUntil(deadlineStr) {
+  if (!deadlineStr) return null;
+  const now = new Date();
+  now.setHours(0, 0, 0, 0);
+  const d = new Date(deadlineStr);
+  if (isNaN(d.getTime())) return null;
+  d.setHours(0, 0, 0, 0);
+  return Math.round((d - now) / 86400000);
+}
+
+/* 解析岗位JD中的日期信息，估算开放时间 */
+function estimateOpenDate(job) {
+  const jd = job.jd || '';
+  const now = new Date();
+  /* 如果JD中包含"今日"或"刚开放"，认为是今天开放 */
+  if (jd.includes('今日') || jd.includes('刚开放') || jd.includes('8/3') || jd.includes('8月3')) {
+    return new Date(now);
+  }
+  /* 默认认为7天前开放 */
+  const d = new Date(now);
+  d.setDate(d.getDate() - 7);
+  return d;
+}
+
+/* 计算大厂等待期是否已过（核心大厂等2周，大厂等1周） */
+function getWaitStatus(job) {
+  const tier = getCompanyTier(job.company);
+  if (tier === 'sme') return { status: 'ready', days: 0, waitDays: 0 };
+
+  const openDate = estimateOpenDate(job);
+  const now = new Date();
+  const daysSinceOpen = Math.floor((now - openDate) / 86400000);
+  const waitDays = tier === 'tier1' ? 14 : 7;
+  const remaining = waitDays - daysSinceOpen;
+
+  if (remaining <= 0) return { status: 'ready', days: 0, waitDays, daysSinceOpen };
+  return { status: 'waiting', days: remaining, waitDays, daysSinceOpen };
+}
+
+function renderStrategy() {
+  const jobs = (data.jobs || []).filter(j => j && j.jstatus !== '已拒绝' && j.jstatus !== '已Offer');
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+
+  /* 分类 */
+  const urgent = [];    /* 即将截止（3天内） */
+  const ready = [];     /* 可以投递（中小厂 + 大厂等待期满） */
+  const waiting = [];   /* 大厂等待中 */
+  const normal = [];    /* 正常排队 */
+
+  jobs.forEach(job => {
+    const tier = getCompanyTier(job.company);
+    const wait = getWaitStatus(job);
+    const dl = daysUntil(job.deadline);
+
+    /* 已投递的不显示在策略中 */
+    if (job.jstatus && job.jstatus !== '未投递') return;
+
+    const item = { job, tier, wait, dl };
+
+    /* 即将截止优先 */
+    if (dl !== null && dl <= 3 && dl >= 0) {
+      urgent.push(item);
+    } else if (wait.status === 'ready') {
+      ready.push(item);
+    } else if (wait.status === 'waiting') {
+      waiting.push(item);
+    } else {
+      normal.push(item);
+    }
+  });
+
+  /* 排序：截止日期升序 */
+  const sortByDeadline = (a, b) => {
+    const da = a.dl === null ? 999 : a.dl;
+    const db = b.dl === null ? 999 : b.dl;
+    return da - db;
+  };
+  urgent.sort(sortByDeadline);
+  ready.sort(sortByDeadline);
+  waiting.sort((a, b) => a.wait.days - b.wait.days);
+  normal.sort(sortByDeadline);
+
+  /* 统计 */
+  const stats = {
+    total: jobs.filter(j => j.jstatus === '未投递' || !j.jstatus).length,
+    applied: jobs.filter(j => j.jstatus && j.jstatus !== '未投递').length,
+    urgent: urgent.length,
+    ready: ready.length,
+    waiting: waiting.length
+  };
+
+  const banner = `<div class="strategy-banner">
+    <div class="sb-icon">${icon("target",24)}</div>
+    <div class="sb-text">
+      <div class="sb-title">投递策略：中小厂先行，大厂穿插，核心大厂等待1-2周</div>
+      <div class="sb-desc">未投递 ${stats.total} 个 · 已投递 ${stats.applied} 个 · 即将截止 ${stats.urgent} · 可投递 ${stats.ready} · 等待中 ${stats.waiting}</div>
+    </div>
+  </div>`;
+
+  function cardHTML(item) {
+    const { job, tier, wait, dl } = item;
+    const tierLabel = getTierLabel(tier);
+    const tierColor = getTierColor(tier);
+
+    let actionHTML = '';
+    let countdownHTML = '';
+
+    if (dl !== null && dl <= 3 && dl >= 0) {
+      countdownHTML = `<span class="sc-countdown" style="background:var(--danger-muted);color:var(--danger)">${dl === 0 ? '今天截止' : dl + '天后截止'}</span>`;
+      actionHTML = `<button class="sc-apply-btn red" onclick="event.stopPropagation();markJobStatus(${job.id},'已投递')">立即投递</button>`;
+    } else if (wait.status === 'ready') {
+      if (tier === 'sme') {
+        actionHTML = `<button class="sc-apply-btn green" onclick="event.stopPropagation();markJobStatus(${job.id},'已投递')">立即投递</button>`;
+      } else {
+        actionHTML = `<button class="sc-apply-btn blue" onclick="event.stopPropagation();markJobStatus(${job.id},'已投递')">可以投递</button>`;
+      }
+    } else if (wait.status === 'waiting') {
+      countdownHTML = `<span class="sc-countdown" style="background:color-mix(in srgb,var(--module-3) 12%,transparent);color:var(--module-3)">等待 ${wait.days} 天</span>`;
+      actionHTML = `<button class="sc-apply-btn amber" disabled style="opacity:.5;cursor:not-allowed">等待中</button>`;
+    } else {
+      actionHTML = `<button class="sc-apply-btn green" onclick="event.stopPropagation();markJobStatus(${job.id},'已投递')">投递</button>`;
+    }
+
+    if (dl !== null && dl > 3 && dl <= 7) {
+      countdownHTML = `<span class="sc-countdown" style="background:var(--accent-muted);color:var(--accent)">${dl}天后截止</span>`;
+    } else if (dl !== null && dl > 7) {
+      countdownHTML = `<span class="sc-countdown" style="background:var(--surface-nested);color:var(--text-secondary)">${dl}天后截止</span>`;
+    } else if (dl !== null && dl < 0) {
+      countdownHTML = `<span class="sc-countdown" style="background:var(--danger-muted);color:var(--danger)">已过期</span>`;
+    }
+
+    const linkHTML = job.link && job.link.startsWith('http')
+      ? `<a href="${attr(job.link)}" target="_blank" rel="noopener" class="sc-apply-btn green" style="text-decoration:none" onclick="event.stopPropagation()">打开链接</a>`
+      : '';
+
+    return `<div class="strategy-card" onclick="go('jobs')">
+      <div class="sc-tier" style="background:${tierColor}">${tier === 'tier1' ? 'T1' : tier === 'tier2' ? 'T2' : 'SME'}</div>
+      <div class="sc-info">
+        <div class="sc-title">${esc(job.title || '无标题')}</div>
+        <div class="sc-meta">${esc(job.company || '')} · ${tierLabel}${job.deadline ? ' · 截止 ' + esc(job.deadline) : ''}</div>
+      </div>
+      <div class="sc-action">${countdownHTML}${linkHTML}${actionHTML}</div>
+    </div>`;
+  }
+
+  function sectionHTML(cls, icon2, title, badge, items) {
+    if (!items.length) return '';
+    return `<div class="strategy-section ${cls}">
+      <div class="ss-head">${icon(icon2, 18)} ${title} <span class="ss-badge">${badge}</span><span class="ss-count">${items.length} 个岗位</span></div>
+      ${items.map(cardHTML).join('')}
+    </div>`;
+  }
+
+  $("#screen").innerHTML = `<div class="header"><div><h2>投递策略</h2><p>智能排期 · 分级投递 · 截止提醒</p></div><div class="spacer"></div><span class="date-chip">${icon("calendar",14)} ${dateStr()}</span></div>
+    ${banner}
+    ${sectionHTML('ss-urgent', 'bolt', '即将截止', '3天内', urgent)}
+    ${sectionHTML('ss-ready', 'check', '可以投递', '就绪', ready)}
+    ${sectionHTML('ss-waiting', 'moon', '等待期', '大厂冷却中', waiting)}
+    ${sectionHTML('ss-normal', 'list', '正常排队', '有空再投', normal)}`;
+}
+
+function markJobStatus(jobId, status) {
+  const job = (data.jobs || []).find(j => j.id === jobId);
+  if (job) { job.jstatus = status; persist(); renderStrategy(); }
+}
+
+/* ============================================================
+   REMINDER SYSTEM — 每日提醒
+   ============================================================ */
+function checkReminders() {
+  const jobs = data.jobs || [];
+  const reminders = [];
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const todayKey = today.toISOString().slice(0, 10);
+  const lastCheck = localStorage.getItem('qiuzhao-last-reminder') || '';
+
+  /* 每天只提醒一次 */
+  if (lastCheck === todayKey) return;
+
+  jobs.forEach(job => {
+    if (!job || job.jstatus === '已拒绝' || job.jstatus === '已Offer') return;
+    if (job.jstatus && job.jstatus !== '未投递') return;
+
+    const dl = daysUntil(job.deadline);
+    const wait = getWaitStatus(job);
+
+    /* 即将截止提醒 */
+    if (dl !== null && dl >= 0 && dl <= 3) {
+      reminders.push({
+        type: 'urgent',
+        text: `${job.company || ''} - ${job.title || ''} ${dl === 0 ? '今天截止' : dl + '天后截止'}`
+      });
+    }
+
+    /* 大厂等待期满提醒 */
+    if (wait.status === 'ready' && wait.daysSinceOpen >= wait.waitDays && wait.waitDays > 0) {
+      reminders.push({
+        type: 'ready',
+        text: `${job.company || ''} 等待期已满，可以投递了`
+      });
+    }
+  });
+
+  if (reminders.length > 0) {
+    showReminderPopup(reminders);
+    localStorage.setItem('qiuzhao-last-reminder', todayKey);
+  }
+}
+
+function showReminderPopup(reminders) {
+  const urgent = reminders.filter(r => r.type === 'urgent');
+  const ready = reminders.filter(r => r.type === 'ready');
+
+  const popup = document.createElement('div');
+  popup.className = 'reminder-popup';
+  popup.id = 'reminderPopup';
+
+  let bodyHTML = '';
+  if (urgent.length) {
+    bodyHTML += '<div style="font-weight:700;color:var(--danger);font-size:13px;margin-bottom:6px">即将截止</div>';
+    urgent.forEach(r => { bodyHTML += '<div class="rp-item">' + esc(r.text) + '</div>'; });
+  }
+  if (ready.length) {
+    bodyHTML += '<div style="font-weight:700;color:var(--module-1);font-size:13px;margin:' + (urgent.length ? '10px' : '0') + ' 0 6px">可以投递</div>';
+    ready.forEach(r => { bodyHTML += '<div class="rp-item">' + esc(r.text) + '</div>'; });
+  }
+
+  popup.innerHTML = `
+    <button class="rp-close" onclick="document.getElementById('reminderPopup').remove()">${icon("close",16,2)}</button>
+    <div class="rp-head">
+      <div class="rp-icon">${icon("bolt",20)}</div>
+      <div class="rp-title">投递提醒 (${reminders.length})</div>
+    </div>
+    <div class="rp-body">${bodyHTML}</div>
+    <div style="margin-top:12px;display:flex;gap:8px">
+      <button class="btn" style="flex:1;padding:9px;font-size:13px" onclick="document.getElementById('reminderPopup').remove();go('strategy')">查看策略</button>
+      <button class="btn ghost" style="flex:1;padding:9px;font-size:13px" onclick="document.getElementById('reminderPopup').remove()">稍后</button>
+    </div>`;
+  document.body.appendChild(popup);
+
+  /* 10秒后自动消失（如果有多个提醒则30秒） */
+  setTimeout(() => {
+    const el = document.getElementById('reminderPopup');
+    if (el) el.remove();
+  }, reminders.length > 3 ? 30000 : 10000);
+}
+
 /* ---------- router / sidebar ---------- */
 function dateStr(){ const n=new Date(); const wd="日一二三四五六"[n.getDay()]; return `${n.getFullYear()}年${n.getMonth()+1}月${n.getDate()}日 周${wd}`; }
 function go(v){ view=v; searchQ=""; renderNavActive(); render(); window.scrollTo({top:0}); }
-function render(){ if(view==="home") renderHome(); else if(view==="insight") renderInsight(); else renderModule(view); }
+function render(){ if(view==="home") renderHome(); else if(view==="strategy") renderStrategy(); else if(view==="insight") renderInsight(); else renderModule(view); }
 
 function buildNav(){
   $("#brandName").textContent=CONFIG.owner; $("#brandSlogan").textContent=CONFIG.slogan;
   const html=[`<div class="navi" data-go="home">${icon("home",19)}首页</div>`,
+    `<div class="navi" data-go="strategy">${icon("target",19)}投递策略</div>`,
     `<div class="nav-sep">功能模块</div>`]
     .concat(CONFIG.modules.map(m=>`<div class="navi" data-go="${m.key}">${icon(m.icon,19)}${m.name}</div>`))
     .concat([`<div class="nav-sep">统计</div>`, `<div class="navi" data-go="insight">${icon("chart",19)}洞察复盘</div>`]);
@@ -2192,6 +2559,9 @@ setupMobileNav();
 
 buildNav();
 render();
+
+/* 检查投递提醒（页面加载后2秒） */
+setTimeout(checkReminders, 2000);
 
 /* 页面加载后自动推送本地数据到云端（3秒延迟，等 Firebase 连接稳定） */
 setTimeout(function(){ if(fbDb){ cloudSync(); } }, 3000);
