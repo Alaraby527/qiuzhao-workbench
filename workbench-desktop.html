@@ -669,6 +669,10 @@
     transition: all .15s; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
   .job-link:hover { background: var(--accent); color: var(--on-accent); }
   .job-link svg { flex: 0 0 auto; }
+  .job-link-text { display: inline-flex; align-items: center; gap: 5px; font-size: 12.5px; font-weight: 600;
+    color: var(--text-secondary); padding: 4px 10px; border-radius: 8px; background: var(--surface-nested);
+    border: 1px solid var(--border); }
+  .job-link-text svg { flex: 0 0 auto; color: var(--text-tertiary); }
 
   /* ---- prevent horizontal overflow globally ---- */
   .rec, .rec .top, .rec .body { min-width: 0; }
@@ -1805,7 +1809,7 @@ function recHTML(m,x){
       <span class="rdate">${x.date||''}</span>${customBlock}</div>
       <div class="amt ${inc?'inc':'exp'}">${inc?'+':'-'}¥${x.amount}</div></div></div>`; }
   // note (also used for jobs)
-  const jobLink = x.link ? `<a href="${attr(x.link)}" target="_blank" rel="noopener" class="job-link" onclick="event.stopPropagation()">${icon("external",14)} ${esc(x.link.length>40?x.link.slice(0,37)+'...':x.link)}</a>` : '';
+  const jobLink = x.link ? (x.link.startsWith('http') ? `<a href="${attr(x.link)}" target="_blank" rel="noopener" class="job-link" onclick="event.stopPropagation()">${icon("external",14)} 打开投递链接</a>` : `<span class="job-link-text">${icon("external",14)} ${esc(x.link)}</span>`) : '';
   return `<div class="rec ${layoutCls}">${acts}<div class="top" style="padding-right:60px">${thumb}<div class="body" data-edit="${x.id}">
     <span class="rname">${esc(x.title||'无标题')}</span>
     ${x.mood?`<span class="badge" style="background:var(--accent-muted);color:var(--accent)">${esc(x.mood)}</span>`:''}
