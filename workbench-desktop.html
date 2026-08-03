@@ -1884,14 +1884,29 @@ let fbDb = null;
 let fbSyncing = false;
 let syncTimer = null;
 
+/* 内嵌默认 Firebase 配置 — 手机端打开即自动连接，无需手动配置 */
+const DEFAULT_FB_CONFIG = {
+  apiKey: "AIzaSyAC9yWufEAjs2OKoImjW4a-qt8L3FHj_iQ",
+  authDomain: "qiuzhao-workbench.firebaseapp.com",
+  databaseURL: "https://qiuzhao-workbench-default-rtdb.firebaseio.com",
+  projectId: "qiuzhao-workbench",
+  appId: "1:222085739606:web:ee7e61d1da12f2cba8b7f7",
+  storageBucket: "qiuzhao-workbench.firebasestorage.app",
+  messagingSenderId: "222085739606"
+};
+const DEFAULT_SYNC_ID = "user-qiuzhao-2026";
+
 function getFbConfig() {
-  try { return JSON.parse(localStorage.getItem(FB_CONFIG_KEY) || 'null'); } catch(e) { return null; }
+  try {
+    const stored = JSON.parse(localStorage.getItem(FB_CONFIG_KEY) || 'null');
+    return stored || DEFAULT_FB_CONFIG;
+  } catch(e) { return DEFAULT_FB_CONFIG; }
 }
 
 function getSyncId() {
   let id = localStorage.getItem(FB_SYNC_ID_KEY);
   if (!id) {
-    id = 'user-' + Math.random().toString(36).slice(2, 10);
+    id = DEFAULT_SYNC_ID;
     localStorage.setItem(FB_SYNC_ID_KEY, id);
   }
   return id;
@@ -2086,6 +2101,9 @@ setupMobileNav();
 
 buildNav();
 render();
+
+/* 页面加载后自动推送本地数据到云端（3秒延迟，等 Firebase 连接稳定） */
+setTimeout(function(){ if(fbDb){ cloudSync(); } }, 3000);
 </script>
 </body>
 </html>
